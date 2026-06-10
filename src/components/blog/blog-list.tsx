@@ -136,6 +136,16 @@ const BlogList = ({ posts }: BlogListProps) => {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
                 <div className="space-y-4">
+                  {post.coverImage && (
+                    <Link href={`/blog/${post.slug}`} className="block overflow-hidden rounded-lg border aspect-video bg-muted relative">
+                      <img
+                        src={post.coverImage}
+                        alt={post.title}
+                        className="object-cover w-full h-full group-hover:scale-[1.03] transition-transform duration-500"
+                      />
+                    </Link>
+                  )}
+
                   {/* Category & Date */}
                   <div className="flex items-center justify-between text-xs text-muted-foreground">
                     <span className="flex items-center gap-1 bg-secondary px-2.5 py-1 rounded-full text-secondary-foreground font-medium">

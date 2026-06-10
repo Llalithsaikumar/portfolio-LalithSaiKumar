@@ -93,6 +93,19 @@ const BlogDetail = ({ post, contentHtml }: BlogDetailProps) => {
           )}
         </div>
 
+        {post.coverImage && (
+          <motion.div
+            variants={item}
+            className="my-8 rounded-2xl overflow-hidden aspect-[16/9] relative border bg-muted"
+          >
+            <img
+              src={post.coverImage}
+              alt={post.title}
+              className="object-cover w-full h-full"
+            />
+          </motion.div>
+        )}
+
         <Separator className="my-8" />
 
         {/* Dynamic HTML Content */}

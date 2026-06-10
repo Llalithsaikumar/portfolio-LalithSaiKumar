@@ -11,6 +11,7 @@ export interface BlogPost {
   published: boolean;
   date: string;
   category?: string;
+  coverImage?: string;
 }
 
 function slugify(text: string): string {
@@ -152,6 +153,28 @@ export async function getPublishedPosts(): Promise<BlogPost[]> {
       const date = page.properties.Date?.date?.start || page.created_time.split("T")[0];
       const category = page.properties.Category?.select?.name || "General";
 
+      // Parse cover image from page.cover or properties
+      let coverImage = "";
+      if (page.cover) {
+        if (page.cover.type === "external") {
+          coverImage = page.cover.external.url;
+        } else if (page.cover.type === "file") {
+          coverImage = page.cover.file.url;
+        }
+      }
+
+      if (!coverImage) {
+        const coverProp = page.properties.Cover || page.properties["Cover Image"] || page.properties["cover"];
+        if (coverProp && coverProp.type === "files" && coverProp.files && coverProp.files.length > 0) {
+          const firstFile = coverProp.files[0];
+          if (firstFile.type === "external") {
+            coverImage = firstFile.external.url;
+          } else if (firstFile.type === "file") {
+            coverImage = firstFile.file.url;
+          }
+        }
+      }
+
       return {
         id: page.id,
         title,
@@ -160,6 +183,7 @@ export async function getPublishedPosts(): Promise<BlogPost[]> {
         published: page.properties.Published?.checkbox || false,
         date,
         category,
+        coverImage: coverImage || undefined,
       };
     });
 
@@ -177,6 +201,7 @@ export async function getPublishedPosts(): Promise<BlogPost[]> {
         published: true,
         date: "2026-06-10",
         category: "AI",
+        coverImage: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=1000",
       },
       {
         id: "mock-2",
@@ -186,6 +211,7 @@ export async function getPublishedPosts(): Promise<BlogPost[]> {
         published: true,
         date: "2026-06-05",
         category: "Backend",
+        coverImage: "https://images.unsplash.com/photo-1618401471353-b98aedd07871?q=80&w=1000",
       }
     ];
   }
