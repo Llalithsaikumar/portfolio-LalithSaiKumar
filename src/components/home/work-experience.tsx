@@ -23,14 +23,15 @@ const experiences = [
     skills: ["Backend", "Frontend", "APIs", "CI/CD", "Testing"],
     description:
       "Refactored backend and frontend modules to improve domain clarity and data consistency. Updated APIs, shared types, tests, and documentation to align with revised domain models. Collaborated with maintainers through structured pull requests, reviews, and CI fixes.",
+    achievementsUrl: "https://github.com/activist-org/activist/pull/1815",
   },
   {
     id: 2,
-    title: "Software Engineer Intern",
+    title: "Machine Learning Intern",
     company: "Proven Solution",
     location: "Riyadh, Saudi Arabia (Remote)",
     period: "Oct 2024 – May 2025",
-    skills: ["ML Algorithms", "Inference Engine", "REST APIs", "Agile", "PR Review"],
+    skills: ["ML Algorithms", "Inference Engine", "REST APIs", "Agile", "Team Review"],
     description:
       "Designed and tested ML algorithms achieving 85% accuracy for telemetry systems. Developed scalable inference engine reducing latency by 30 seconds. Built and debugged REST APIs in collaborative team environment. Contributed to 15+ Agile sprints and reviewed 50+ PRs.",
   },
@@ -136,16 +137,21 @@ export default function WorkExperience() {
                         </div>
 
                         {/* Achievements Button - Could link to detailed view */}
-                        <div className="pt-2">
-                          <motion.button
-                            className="text-sm text-primary flex items-center"
-                            whileHover={{ x: 5 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            View achievements
-                            <ArrowRight className="h-3.5 w-3.5 ml-1" />
-                          </motion.button>
-                        </div>
+                        {exp.achievementsUrl && (
+                          <div className="pt-2">
+                            <motion.a
+                              href={exp.achievementsUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-sm text-primary inline-flex items-center cursor-pointer"
+                              whileHover={{ x: 5 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              View achievements
+                              <ArrowRight className="h-3.5 w-3.5 ml-1" />
+                            </motion.a>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
