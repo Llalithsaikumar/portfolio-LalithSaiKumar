@@ -14,6 +14,11 @@ export interface BlogPost {
 }
 
 function slugify(text: string): string {
+  try {
+    text = decodeURIComponent(text);
+  } catch {
+    // Ignore decode errors
+  }
   return text
     .toString()
     .toLowerCase()
@@ -140,6 +145,8 @@ export async function getPublishedPosts(): Promise<BlogPost[]> {
       let slug = page.properties.Slug?.rich_text?.map((t: any) => t.plain_text).join("") || "";
       if (!slug) {
         slug = slugify(title);
+      } else {
+        slug = slugify(slug);
       }
       const excerpt = page.properties.Excerpt?.rich_text?.map((t: any) => t.plain_text).join("") || "";
       const date = page.properties.Date?.date?.start || page.created_time.split("T")[0];
@@ -186,7 +193,8 @@ export async function getPublishedPosts(): Promise<BlogPost[]> {
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   const posts = await getPublishedPosts();
-  return posts.find((p) => p.slug === slug) || null;
+  const targetSlug = slugify(slug);
+  return posts.find((p) => slugify(p.slug) === targetSlug) || null;
 }
 
 export async function getPostContent(pageId: string): Promise<string> {
