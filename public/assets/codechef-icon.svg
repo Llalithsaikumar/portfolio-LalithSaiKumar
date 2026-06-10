@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CodeChef icon">
+  <rect width="64" height="64" rx="14" fill="#0c0816"/>
+  <path d="M16 36.5c0-6.5 5.5-12 16-12s16 5.5 16 12v4c0 3.3-2.7 6-6 6H22c-3.3 0-6-2.7-6-6v-4z" fill="#5B3B1E" stroke="#3A2413" stroke-width="3"/>
+  <path d="M20 32c1.5-5 6.5-9 12-9s10.5 4 12 9" stroke="#D8C6A5" stroke-width="3" stroke-linecap="round"/>
+  <path d="M18 40h28" stroke="#D8C6A5" stroke-width="3" stroke-linecap="round"/>
+  <rect x="24" y="20" width="16" height="6" rx="3" fill="#D8C6A5" stroke="#5B3B1E" stroke-width="2"/>
+</svg>
