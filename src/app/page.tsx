@@ -1,5 +1,6 @@
 import BottomHero from "@/components/home/bottom-hero";
 import ContactSection from "@/components/home/contact-section";
+import Education from "@/components/home/education";
 import Hero from "@/components/home/hero";
 import Projects from "@/components/home/projects";
 import WorkExperience from "@/components/home/work-experience";
@@ -16,6 +17,7 @@ export default function Home() {
       <main className="w-full lg:w-[90%] mx-auto flex flex-col justify-center items-center">
         <Hero />
         <WorkExperience />
+        <Education />
         <Projects />
         <BottomHero />
         <ContactSection />
