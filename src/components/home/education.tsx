@@ -13,7 +13,7 @@ import {
 const education = [
   {
     id: 1,
-    degree: "Bachelor of Technology in Artificial Intelligence and Data Science",
+    degree: "B.Tech in Artificial Intelligence and Data Science",
     institution: "Sree Rama Engineering College",
     location: "Tirupati, India",
     period: "Oct 2022 – Apr 2026",
