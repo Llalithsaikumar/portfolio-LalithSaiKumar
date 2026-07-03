@@ -86,6 +86,22 @@ export default function Footer() {
             ))}
           </div>
 
+          {/* GitHub Sponsor Button */}
+          <div className="flex justify-center items-center py-2">
+            <motion.a
+              href="https://github.com/sponsors/Llalithsaikumar"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-[#db61a2] hover:bg-[#db61a2]/90 rounded-md shadow-sm transition-all border border-[#db61a2]"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Heart className="h-3.5 w-3.5 fill-current text-white animate-pulse" />
+              <span>Sponsor</span>
+            </motion.a>
+          </div>
+
+
           {/* Copyright */}
           <motion.div
             className="text-sm text-muted-foreground flex items-center"
