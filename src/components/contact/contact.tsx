@@ -26,24 +26,46 @@ const Contact = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      toast("Message sent!", {
-        description: "Thank you for your message. We'll get back to you soon.",
+    try {
+      const dataToSubmit = new FormData(e.currentTarget);
+      dataToSubmit.append(
+        "access_key",
+        process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || ""
+      );
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: dataToSubmit,
       });
 
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-      });
+      const data = await response.json();
 
+      if (data.success) {
+        toast("Message sent!", {
+          description: "Thank you for your message. We'll get back to you soon.",
+        });
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        toast.error("Failed to send message", {
+          description: data.message || "Something went wrong. Please try again.",
+        });
+      }
+    } catch (error) {
+      toast.error("Error", {
+        description: "An unexpected error occurred. Please try again later.",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   useEffect(() => {
