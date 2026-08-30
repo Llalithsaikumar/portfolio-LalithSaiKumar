@@ -4,8 +4,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Calendar, Tag, Clock } from "lucide-react";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { BlogPost } from "@/lib/notion";
+import { staggerContainer, fadeUp } from "@/lib/motion-variants";
 
 interface BlogDetailProps {
   post: BlogPost;
@@ -13,34 +14,14 @@ interface BlogDetailProps {
 }
 
 const BlogDetail = ({ post, contentHtml }: BlogDetailProps) => {
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 20, filter: "blur(10px)" },
-    show: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
-
   // Estimate read time based on content length (roughly 200 words per minute)
   const wordCount = contentHtml.replace(/<[^>]*>/g, "").split(/\s+/).length;
   const readTime = Math.max(1, Math.ceil(wordCount / 200));
 
   return (
-    <motion.section
+    <m.section
       className="py-24 w-full max-w-3xl mx-auto"
-      variants={container}
+      variants={staggerContainer}
       initial="hidden"
       animate="show"
     >
@@ -57,7 +38,7 @@ const BlogDetail = ({ post, contentHtml }: BlogDetailProps) => {
 
         {/* Article Header info */}
         <div className="space-y-6 mb-8">
-          <motion.div variants={item} className="flex flex-wrap gap-3 items-center">
+          <m.div variants={fadeUp} className="flex flex-wrap gap-3 items-center">
             <span className="flex items-center gap-1 bg-secondary px-3 py-1 rounded-full text-xs font-semibold text-secondary-foreground">
               <Tag className="h-3 w-3" />
               {post.category || "General"}
@@ -74,50 +55,51 @@ const BlogDetail = ({ post, contentHtml }: BlogDetailProps) => {
               <Clock className="h-3 w-3" />
               {readTime} min read
             </span>
-          </motion.div>
+          </m.div>
 
-          <motion.h1
+          <m.h1
             className="text-3xl md:text-5xl font-extrabold tracking-tight font-heading leading-tight"
-            variants={item}
+            variants={fadeUp}
           >
             {post.title}
-          </motion.h1>
+          </m.h1>
 
           {post.excerpt && (
-            <motion.p
+            <m.p
               className="text-lg md:text-xl text-muted-foreground italic border-l-2 border-primary/30 pl-4 py-1 leading-relaxed"
-              variants={item}
+              variants={fadeUp}
             >
               {post.excerpt}
-            </motion.p>
+            </m.p>
           )}
         </div>
 
         {post.coverImage && (
-          <motion.div
-            variants={item}
+          <m.div
+            variants={fadeUp}
             className="my-8 rounded-2xl overflow-hidden aspect-[16/9] relative border bg-muted"
           >
             <img
               src={post.coverImage}
               alt={post.title}
+              decoding="async"
               className="object-cover w-full h-full"
             />
-          </motion.div>
+          </m.div>
         )}
 
         <Separator className="my-8" />
 
         {/* Dynamic HTML Content */}
-        <motion.div
+        <m.div
           className="prose dark:prose-invert max-w-none text-foreground/95 leading-relaxed text-base md:text-lg space-y-4"
-          variants={item}
+          variants={fadeUp}
         >
           <div
             dangerouslySetInnerHTML={{ __html: contentHtml }}
             className="blog-content"
           />
-        </motion.div>
+        </m.div>
 
         <Separator className="my-12" />
 
@@ -133,7 +115,7 @@ const BlogDetail = ({ post, contentHtml }: BlogDetailProps) => {
           </Button>
         </div>
       </div>
-    </motion.section>
+    </m.section>
   );
 };
 

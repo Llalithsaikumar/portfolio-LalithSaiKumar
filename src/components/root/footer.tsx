@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import { motion } from "framer-motion";
+import { m } from "motion/react";
 import Link from "next/link";
 import { Github, Linkedin, Code, Mail, Heart } from "lucide-react";
 
@@ -42,18 +42,18 @@ export default function Footer() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col items-center space-y-6">
           {/* Logo */}
-          <motion.div
+          <m.div
             className="font-heading text-xl font-bold"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <Link href="/">Lalith Sai Kumar</Link>
-          </motion.div>
+          </m.div>
 
           {/* Navigation */}
           <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2">
             {footerLinks.map((link) => (
-              <motion.div
+              <m.div
                 key={link.label}
                 whileHover={{ y: -2 }}
                 whileTap={{ y: 0 }}
@@ -64,14 +64,14 @@ export default function Footer() {
                 >
                   {link.label}
                 </Link>
-              </motion.div>
+              </m.div>
             ))}
           </nav>
 
           {/* Social Links */}
           <div className="flex space-x-4">
             {socialLinks.map((link) => (
-              <motion.a
+              <m.a
                 key={link.label}
                 href={link.href}
                 target="_blank"
@@ -82,13 +82,13 @@ export default function Footer() {
                 aria-label={link.label}
               >
                 {link.icon}
-              </motion.a>
+              </m.a>
             ))}
           </div>
 
           {/* GitHub Sponsor Button */}
           <div className="flex justify-center items-center py-2">
-            <motion.a
+            <m.a
               href="https://github.com/sponsors/Llalithsaikumar"
               target="_blank"
               rel="noopener noreferrer"
@@ -98,19 +98,19 @@ export default function Footer() {
             >
               <Heart className="h-3.5 w-3.5 fill-current text-white animate-pulse" />
               <span>Sponsor</span>
-            </motion.a>
+            </m.a>
           </div>
 
 
           {/* Copyright */}
-          <motion.div
+          <m.div
             className="text-sm text-muted-foreground flex items-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
             <span>© {currentYear} Lekkala Lalith Sai Kumar. Made with</span>
-            <motion.div
+            <m.div
               animate={{
                 scale: [1, 1.2, 1],
               }}
@@ -122,9 +122,9 @@ export default function Footer() {
               className="inline-flex mx-1"
             >
               <Heart className="h-4 w-4 text-red-500" />
-            </motion.div>
+            </m.div>
             <span>and Next.js</span>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </footer>

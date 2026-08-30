@@ -1,13 +1,18 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { m } from "motion/react";
 import {
   GraduationCap,
   MapPin,
   Calendar,
   School,
 } from "lucide-react";
+import {
+  staggerContainer,
+  fadeUp,
+  fadeUpSubtle,
+  viewportOnce,
+} from "@/lib/motion-variants";
 
 // Education data
 const education = [
@@ -21,21 +26,18 @@ const education = [
 ];
 
 export default function Education() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
-
   return (
     <section className="py-16 md:py-20 relative overflow-hidden">
       <div className="container px-4 md:px-6 relative z-10">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
+        <m.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewportOnce}
           className="space-y-12"
         >
           {/* Section Header */}
-          <div className="space-y-4 text-center">
+          <m.div variants={fadeUp} className="space-y-4 text-center">
             <h2 className="text-3xl font-heading font-bold tracking-tight sm:text-4xl">
               Education
             </h2>
@@ -43,18 +45,14 @@ export default function Education() {
               My academic background and the foundation behind my work in AI and
               data science.
             </p>
-          </div>
+          </m.div>
 
           {/* Education Cards */}
           <div className="max-w-4xl mx-auto space-y-12">
             {education.map((edu, index) => (
-              <motion.div
+              <m.div
                 key={edu.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={
-                  isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-                }
-                transition={{ duration: 0.5, delay: index * 0.2 }}
+                variants={fadeUpSubtle}
                 className="relative"
               >
                 {/* Connecting Line */}
@@ -96,10 +94,10 @@ export default function Education() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

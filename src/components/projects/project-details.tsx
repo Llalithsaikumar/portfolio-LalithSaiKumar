@@ -5,37 +5,18 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Github, Link2 } from "lucide-react";
 import { ProjectItem } from "@/utilities/data";
-import { motion } from "motion/react";
+import { m } from "motion/react";
+import { staggerContainer, fadeUp } from "@/lib/motion-variants";
 
 const ProjectDetail = ({ project }: { project: ProjectItem }) => {
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const viewitem = {
-    hidden: { opacity: 0, y: 20, filter: "blur(10px)" },
-    show: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 0.8, ease: "easeOut" },
-    },
-  };
-
   return (
-    <motion.section
+    <m.section
       className="py-25"
-      variants={container}
+      variants={staggerContainer}
       initial="hidden"
       animate="show"
     >
-      <motion.div className="container mx-auto">
+      <m.div className="container mx-auto">
         <Button asChild variant="ghost" className="mb-6 -ml-3">
           <Link href="/projects">
             <span className="flex items-center gap-2">
@@ -44,19 +25,19 @@ const ProjectDetail = ({ project }: { project: ProjectItem }) => {
             </span>
           </Link>
         </Button>
-        <motion.h1
+        <m.h1
           className="text-3xl md:text-4xl font-bold mb-4"
-          variants={viewitem}
+          variants={fadeUp}
         >
           {project.title}
-        </motion.h1>
-        <motion.p
+        </m.h1>
+        <m.p
           className="text-lg text-muted-foreground mb-8 max-w-2xl"
-          variants={viewitem}
+          variants={fadeUp}
         >
           {project.description}
-        </motion.p>
-        <motion.div className="flex flex-wrap gap-3 mb-8" variants={viewitem}>
+        </m.p>
+        <m.div className="flex flex-wrap gap-3 mb-8" variants={fadeUp}>
           {project.tech.map((tech) => (
             <span
               key={tech}
@@ -65,8 +46,8 @@ const ProjectDetail = ({ project }: { project: ProjectItem }) => {
               {tech}
             </span>
           ))}
-        </motion.div>
-        <motion.div className="flex flex-wrap gap-4 mb-12" variants={viewitem}>
+        </m.div>
+        <m.div className="flex flex-wrap gap-4 mb-12" variants={fadeUp}>
           {project.github && (
             <Button asChild variant="outline" className="gap-2">
               <Link
@@ -91,9 +72,9 @@ const ProjectDetail = ({ project }: { project: ProjectItem }) => {
               </Link>
             </Button>
           )}
-        </motion.div>
+        </m.div>
         {project.images?.length ? (
-          <motion.div className="mb-12" variants={viewitem}>
+          <m.div className="mb-12" variants={fadeUp}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {project.images.map((img, idx) => (
                 <div
@@ -112,11 +93,11 @@ const ProjectDetail = ({ project }: { project: ProjectItem }) => {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </m.div>
         ) : null}
-        <motion.div
+        <m.div
           className="prose dark:prose-invert max-w-none"
-          variants={viewitem}
+          variants={fadeUp}
         >
           <h2 className="text-2xl font-bold mb-4">Overview</h2>
           {project.longDescription?.split("\n\n").map((para, i) => (
@@ -147,7 +128,7 @@ const ProjectDetail = ({ project }: { project: ProjectItem }) => {
               <p>{project.challenges}</p>
             </>
           ) : null}
-        </motion.div>
+        </m.div>
         <Separator className="my-12" />
         <div className="flex justify-between items-center">
           <Button asChild variant="ghost">
@@ -184,8 +165,8 @@ const ProjectDetail = ({ project }: { project: ProjectItem }) => {
             )}
           </div>
         </div>
-      </motion.div>
-    </motion.section>
+      </m.div>
+    </m.section>
   );
 };
 

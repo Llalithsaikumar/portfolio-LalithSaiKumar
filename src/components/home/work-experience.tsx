@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { m } from "motion/react";
 import {
   Briefcase,
   MapPin,
@@ -11,6 +10,12 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import {
+  staggerContainer,
+  fadeUp,
+  fadeUpSubtle,
+  viewportOnce,
+} from "@/lib/motion-variants";
 
 // Work experience data
 const experiences = [
@@ -38,23 +43,20 @@ const experiences = [
 ];
 
 export default function WorkExperience() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
-
   return (
     <section className="py-16 md:py-20 relative overflow-hidden">
       {/* Background Elements */}
 
       <div className="container px-4 md:px-6 relative z-10">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
+        <m.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewportOnce}
           className="space-y-12"
         >
           {/* Section Header */}
-          <div className="space-y-4 text-center">
+          <m.div variants={fadeUp} className="space-y-4 text-center">
             <h2 className="text-3xl font-heading font-bold tracking-tight sm:text-4xl">
               Work Experience
             </h2>
@@ -62,18 +64,14 @@ export default function WorkExperience() {
               A timeline of my professional journey and the skills I&apos;ve
               developed along the way.
             </p>
-          </div>
+          </m.div>
 
           {/* Experience Cards - Completely Redesigned */}
-          <div className="max-w-4xl mx-auto space-y-12 bg-pri">
+          <div className="max-w-4xl mx-auto space-y-12">
             {experiences.map((exp, index) => (
-              <motion.div
+              <m.div
                 key={exp.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={
-                  isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-                }
-                transition={{ duration: 0.5, delay: index * 0.2 }}
+                variants={fadeUpSubtle}
                 className="relative"
               >
                 {/* Connecting Line */}
@@ -139,7 +137,7 @@ export default function WorkExperience() {
                         {/* Achievements Button - Could link to detailed view */}
                         {exp.achievementsUrl && (
                           <div className="pt-2">
-                            <motion.a
+                            <m.a
                               href={exp.achievementsUrl}
                               target="_blank"
                               rel="noopener noreferrer"
@@ -149,17 +147,17 @@ export default function WorkExperience() {
                             >
                               View achievements
                               <ArrowRight className="h-3.5 w-3.5 ml-1" />
-                            </motion.a>
+                            </m.a>
                           </div>
                         )}
                       </div>
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
