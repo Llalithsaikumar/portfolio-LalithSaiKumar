@@ -1,10 +1,12 @@
 "use client";
 import { useRef, useState } from "react";
 import { Mail, User } from "lucide-react";
+import { m } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { fadeUp, viewportOnce } from "@/lib/motion-variants";
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -48,20 +50,26 @@ export default function ContactSection() {
   return (
     <section id="contact" className="py-20 px-2">
       <div className="container-narrow">
-        <div className="text-center mb-16">
+        <m.div
+          className="text-center mb-16"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewportOnce}
+        >
           <h2 className="text-3xl font-bold mb-4">Get In Touch</h2>
-          <p
-            className="text-muted-foreground max-w-xl mx-auto "
-            style={{ animationDelay: "200ms" }}
-          >
+          <p className="text-muted-foreground max-w-xl mx-auto">
             Have a project in mind or just want to say hello? Feel free to reach
             out.
           </p>
-        </div>
+        </m.div>
 
-        <div
-          className="bg-card rounded-lg shadow-sm p-6 md:p-8 max-w-xl mx-auto ring-transition "
-          style={{ animationDelay: "300ms" }}
+        <m.div
+          className="bg-card rounded-lg shadow-sm p-6 md:p-8 max-w-xl mx-auto ring-transition"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={viewportOnce}
+          transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
         >
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -140,7 +148,7 @@ export default function ContactSection() {
               {isSubmitting ? "Sending..." : "Send Message"}
             </Button>
           </form>
-        </div>
+        </m.div>
       </div>
     </section>
   );

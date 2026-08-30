@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { ArrowLeft, Calendar, Tag, BookOpen, Search } from "lucide-react";
 import { BlogPost } from "@/lib/notion";
+import { staggerContainer, fadeUp } from "@/lib/motion-variants";
 
 interface BlogListProps {
   posts: BlogPost[];
@@ -29,26 +30,6 @@ const BlogList = ({ posts }: BlogListProps) => {
       !selectedCategory || post.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
-
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 20, filter: "blur(10px)" },
-    show: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
 
   return (
     <section className="py-24 w-full">
@@ -119,16 +100,16 @@ const BlogList = ({ posts }: BlogListProps) => {
 
         {/* Blog Posts Grid */}
         {filteredPosts.length > 0 ? (
-          <motion.div
+          <m.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-            variants={container}
+            variants={staggerContainer}
             initial="hidden"
             animate="show"
           >
             {filteredPosts.map((post) => (
-              <motion.div
+              <m.div
                 key={post.id}
-                variants={item}
+                variants={fadeUp}
                 className="group relative flex flex-col justify-between overflow-hidden rounded-xl border bg-card/50 backdrop-blur-sm p-6 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300 h-full"
                 whileHover={{ y: -4 }}
               >
@@ -141,6 +122,8 @@ const BlogList = ({ posts }: BlogListProps) => {
                       <img
                         src={post.coverImage}
                         alt={post.title}
+                        loading="lazy"
+                        decoding="async"
                         className="object-cover w-full h-full group-hover:scale-[1.03] transition-transform duration-500"
                       />
                     </Link>
@@ -185,17 +168,17 @@ const BlogList = ({ posts }: BlogListProps) => {
                     <BookOpen className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
                   </Link>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
-          </motion.div>
+          </m.div>
         ) : (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="text-center py-16 border rounded-2xl bg-card/20"
           >
             <p className="text-muted-foreground">No articles found matching your criteria.</p>
-          </motion.div>
+          </m.div>
         )}
       </div>
     </section>

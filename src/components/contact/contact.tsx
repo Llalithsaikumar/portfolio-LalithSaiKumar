@@ -2,11 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, Mail, MapPin, Github, User } from "lucide-react";
+import { m } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 import { toast } from "sonner";
+import { staggerContainer, fadeUp } from "@/lib/motion-variants";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -59,7 +61,7 @@ const Contact = () => {
           description: data.message || "Something went wrong. Please try again.",
         });
       }
-    } catch (error) {
+    } catch {
       toast.error("Error", {
         description: "An unexpected error occurred. Please try again later.",
       });
@@ -82,22 +84,24 @@ const Contact = () => {
           </Link>
         </Button>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div>
+        <m.div
+          className="grid grid-cols-1 lg:grid-cols-2 gap-12"
+          variants={staggerContainer}
+          initial="hidden"
+          animate="show"
+        >
+          <m.div variants={fadeUp}>
             <h1 className="text-3xl md:text-4xl font-bold mb-4 ">
               Get In Touch
             </h1>
 
-            <p
-              className="text-muted-foreground mb-8 max-w-md "
-              style={{ animationDelay: "200ms" }}
-            >
+            <p className="text-muted-foreground mb-8 max-w-md">
               I&apos;m always interested in new opportunities, collaborations,
               or just chatting about web development and design. Feel free to
               reach out!
             </p>
 
-            <div className="space-y-6 " style={{ animationDelay: "300ms" }}>
+            <div className="space-y-6">
               <div className="flex items-start space-x-4">
                 <div className="bg-secondary dark:bg-accent p-3 rounded-full">
                   <Mail className="h-5 w-5" />
@@ -142,10 +146,7 @@ const Contact = () => {
               </div>
             </div>
 
-            <div
-              className="mt-12 aspect-w-16 aspect-h-9 "
-              style={{ animationDelay: "400ms" }}
-            >
+            <div className="mt-12 aspect-w-16 aspect-h-9">
               <iframe
                 title="Map"
                 className="w-full h-64 md:h-80 rounded-lg border border-border"
@@ -153,11 +154,11 @@ const Contact = () => {
                 loading="lazy"
               ></iframe>
             </div>
-          </div>
+          </m.div>
 
-          <div
-            className="bg-card rounded-lg shadow-sm p-6 md:p-8 ring-transition "
-            style={{ animationDelay: "500ms" }}
+          <m.div
+            variants={fadeUp}
+            className="bg-card rounded-lg shadow-sm p-6 md:p-8 ring-transition h-fit"
           >
             <h2 className="text-2xl font-bold mb-6">Send a Message</h2>
 
@@ -236,8 +237,8 @@ const Contact = () => {
                 {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
             </form>
-          </div>
-        </div>
+          </m.div>
+        </m.div>
       </div>
     </section>
   );

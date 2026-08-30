@@ -1,58 +1,30 @@
 "use client";
 import { Code } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useEffect, useRef, useState } from "react";
+import { m } from "motion/react";
+import { fadeUp, viewportOnce } from "@/lib/motion-variants";
+
+const skills = [
+  "Python & AI",
+  "Retrieval-Augmented Generation",
+  "Large Language Models",
+  "FastAPI & Django",
+  "PostgreSQL",
+  "Docker & DevOps",
+  "REST APIs",
+  "ML Pipelines",
+];
 
 export default function BottomHero() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.2 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
-
-  const skills = [
-    "Python & AI",
-    "Retrieval-Augmented Generation",
-    "Large Language Models",
-    "FastAPI & Django",
-    "PostgreSQL",
-    "Docker & DevOps",
-    "REST APIs",
-    "ML Pipelines",
-  ];
-
   return (
-    <section
-      ref={sectionRef}
-      className="py-24 flex justify-center items-center px-5 lg:-px-0"
-    >
+    <section className="py-24 flex justify-center items-center px-5 lg:-px-0">
       <div className="container max-w-4xl">
         <div className="flex flex-col md:flex-row justify-between gap-12 items-center">
-          <div
-            className={cn(
-              "max-w-md text-center md:text-left",
-              isVisible ? "opacity-100" : "opacity-0",
-              "transition-opacity duration-700"
-            )}
+          <m.div
+            className="max-w-md text-center md:text-left"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={viewportOnce}
           >
             <h2 className="text-3xl font-bold mb-6 text-gradient">
               Transforming Ideas Into <br />
@@ -66,27 +38,26 @@ export default function BottomHero() {
             </p>
             <div className="flex flex-wrap gap-3 justify-center md:justify-start">
               {skills.map((skill, index) => (
-                <span
+                <m.span
                   key={skill}
-                  className={cn(
-                    "px-3 py-1 bg-secondary dark:bg-accent rounded-full text-xs",
-                    isVisible ? "opacity-100" : "opacity-0",
-                    "transition-opacity duration-700"
-                  )}
-                  style={{ transitionDelay: `${index * 100 + 400}ms` }}
+                  className="px-3 py-1 bg-secondary dark:bg-accent rounded-full text-xs"
+                  initial={{ opacity: 0, y: 8 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.3 + index * 0.07 }}
                 >
                   {skill}
-                </span>
+                </m.span>
               ))}
             </div>
-          </div>
+          </m.div>
 
-          <div
-            className={cn(
-              "w-full max-w-xs relative",
-              isVisible ? "opacity-100" : "opacity-0",
-              "transition-opacity duration-700 delay-300"
-            )}
+          <m.div
+            className="w-full max-w-xs relative"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={viewportOnce}
+            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           >
             <div className="rounded-full w-48 h-48 md:w-56 md:h-56 mx-auto bg-secondary dark:bg-accent flex items-center justify-center animate-float">
               <div className="rounded-full w-36 h-36 md:w-44 md:h-44 bg-background flex items-center justify-center relative">
@@ -111,7 +82,7 @@ export default function BottomHero() {
                 </div>
               </div>
             </div>
-          </div>
+          </m.div>
         </div>
       </div>
     </section>
